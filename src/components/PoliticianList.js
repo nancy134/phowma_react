@@ -21,7 +21,7 @@ class PoliticianList extends Component {
     }
 
     loadItems(page) {
-      console.log("loadItems page: "+page);
+      console.log("PoliticianList:loadItems page: "+page);
       var self = this;
       Politicians.search(this.props, page, (politicians) => {
         var pols = [];
@@ -38,7 +38,7 @@ class PoliticianList extends Component {
       });
     }
     componentWillReceiveProps(newProps){
-      console.log("componentWillReceiveProps: newProps: "+JSON.stringify(newProps));
+      console.log("PoliticianList:componentWillReceiveProps: newProps: "+JSON.stringify(newProps));
       this.scroll.pageLoaded = 0;
       this.setState({isRestart: true,
                      hasMoreItems: true,

@@ -6,7 +6,7 @@ import {Panel} from 'react-bootstrap';
 import States from '../actions/States';
 import Districts from '../actions/Districts';
 import PoliticianList from '../components/PoliticianList';
-import MySmallModal from '../components/MySmallModal';
+import Address from '../components/Address';
 import "./Politicians.css";
 
 const ALL_STATES = "All States";
@@ -23,19 +23,23 @@ export default class Representatives extends Component {
       city: "",
       state: "",
       zip: "",
+      all: true,
       stateOpts: [],
       stateData: [],
+      statesReceived: false,
     }
     this.handleOnHide = this.handleOnHide.bind(this);
     this.callback = this.callback.bind(this);
 
   }
   componentWillMount(){
+    console.log("Representatives:componentWillMount");
   }
   componentDidMount(){
     console.log("Representatives:componentDidMount");
     var stateOpts = [];
     States.search((states) => {
+      console.log("States received");
       stateOpts.push(<MenuItem eventKey={0}>{ALL_STATES}</MenuItem>);
       for(let i=0; i<states.length; i++){
         stateOpts.push(<MenuItem eventKey={states[i].id}>{states[i].name}</MenuItem>);
@@ -44,10 +48,12 @@ export default class Representatives extends Component {
       if (this.state.district_id === null){
         this.setState({states: stateOpts,
                        stateData: states,
-                       smShow: true});
+                       smShow: true,
+                       statesReceived: true});
       } else {
         this.setState({states: stateOpts,
-                       stateData: states});
+                       stateData: states,
+                       statesReceived: true});
       }
     });
   }
@@ -56,23 +62,36 @@ export default class Representatives extends Component {
     console.log("handleOnHide");
     this.setState({smShow:false});
   }
-  callback(address, city, state, zip){
+  callback(address, city, state, zip, all){
     console.log("callback address: "+address);
     console.log("callback city: "+city);
     console.log("callback state: "+state);
     console.log("callback zip: "+zip);
+    console.log("callback all: "+all);
     Districts.search(address, city, state, zip, (districts) => {
       console.log("districts: "+JSON.stringify(districts));
       this.setState({address: address,
                      city: city,
                      state: state,
                      zip: zip,
+                     all: all,
                      district_id: districts.id, 
                      state_id: districts.state_id});
     }).catch(error => console.log("This is the error: "+error));
   }
   renderPoliticians() {
-    if (this.state.district_id){
+    console.log("Representatives:renderPoliticians()");
+    if (this.state.all){
+    return <PoliticianList senateSelected={false}
+                           houseSelected={true}
+                           democratSelected={true}
+                           republicanSelected={true}
+                           independentSelected={true}
+                           governorSelected={false}
+                           stateSelected={0}
+                           district_id={this.state.district_id}
+                           state_id={this.state.state_id} />;
+    }else if (this.state.district_id){
     return <PoliticianList senateSelected={false}
                            houseSelected={false}
                            democratSelected={false}
@@ -86,8 +105,22 @@ export default class Representatives extends Component {
   }
 
   render() {
+    console.log("Representatives:render()");
+    if (!this.state.statesReceived) {
+      return <div>Loading...</div>
+    } else {
     return ([
-      <MySmallModal states={this.state.stateData} show={this.state.smShow} cb={this.callback}  onHide={this.handleOnHide} />,
+      <Address
+        statesReceived={this.state.statesReceived}
+        states={this.state.stateData}
+        show={this.state.smShow}
+        cb={this.callback}
+        onHide={this.handleOnHide}
+        address=""
+        city=""
+        state=""
+        zip=""
+      />,
       <Panel header="Representatives for...">
       {this.state.address}, {this.state.city}, {this.state.state}, {this.state.zip}<Button>Change...</Button>
       </Panel>,
@@ -97,5 +130,6 @@ export default class Representatives extends Component {
         </Row>
       </Grid>
     ]);
+    }
   }
 }

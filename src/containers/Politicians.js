@@ -9,7 +9,6 @@ import {Panel} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 import States from '../actions/States';
 import PoliticianList from '../components/PoliticianList';
-import MySmallModal from '../components/MySmallModal';
 import "./Politicians.css";
 
 const Toggles = {
@@ -153,7 +152,6 @@ export default class Home extends Component {
       return <div>Loading...</div>
     } else {
     return ([
-      <MySmallModal states={this.state.stateData} show={this.state.smShow} cb={this.callback}  onHide={this.handleOnHide} />,
       <Grid>
         <Row className="show-grid">
           <Col md={3}>{this.renderFilter()}</Col>
