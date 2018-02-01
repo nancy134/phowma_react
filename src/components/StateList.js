@@ -13,7 +13,7 @@ class StateList extends Component {
         };
     }
     componentWillMount(){
-      States.search((states) => {
+      States.search("min",(states) => {
         this.setState({states: states});
       });
     }

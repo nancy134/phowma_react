@@ -90,8 +90,6 @@ class PoliticianList extends Component {
               </Row>
               <Row>
                 <Col xs={12}>
-                  <h4>Latest Social Media</h4>
-
                   <LatestPost id={social_id}
                   type={social_type} />
                 </Col>

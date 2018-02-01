@@ -27,10 +27,11 @@ export default class Representatives extends Component {
       stateOpts: [],
       stateData: [],
       statesReceived: false,
+      renderAddress: true,
     }
     this.handleOnHide = this.handleOnHide.bind(this);
     this.callback = this.callback.bind(this);
-
+    this.onChange = this.onChange.bind(this);
   }
   componentWillMount(){
     console.log("Representatives:componentWillMount");
@@ -38,7 +39,7 @@ export default class Representatives extends Component {
   componentDidMount(){
     console.log("Representatives:componentDidMount");
     var stateOpts = [];
-    States.search((states) => {
+    States.search("list",(states) => {
       console.log("States received");
       stateOpts.push(<MenuItem eventKey={0}>{ALL_STATES}</MenuItem>);
       for(let i=0; i<states.length; i++){
@@ -57,7 +58,12 @@ export default class Representatives extends Component {
       }
     });
   }
-
+  onChange(){
+    this.setState({
+      smShow: true,
+      renderAddress: true,
+    });
+  }
   handleOnHide(){
     console.log("handleOnHide");
     this.setState({smShow:false});
@@ -76,7 +82,8 @@ export default class Representatives extends Component {
                      zip: zip,
                      all: all,
                      district_id: districts.id, 
-                     state_id: districts.state_id});
+                     state_id: districts.state_id,
+                     renderAddress: false});
     }).catch(error => console.log("This is the error: "+error));
   }
   renderPoliticians() {
@@ -103,26 +110,33 @@ export default class Representatives extends Component {
                            state_id={this.state.state_id} />;
     }
   }
-
+  renderAddress() {
+    console.log("Representatives:renderAddress()");
+    console.log("renderAddress: "+this.state.renderAddress);
+    if (this.state.renderAddress)
+    return ([
+      <Address
+        states={this.state.stateData}
+        show={this.state.smShow}
+        cb={this.callback}
+        onHide={this.handleOnHide}
+        address={this.state.address}
+        city={this.state.city}
+        state={this.state.state}
+        zip={this.state.zip}
+      />
+    ]);
+    else
+    return([]);
+  }
   render() {
     console.log("Representatives:render()");
     if (!this.state.statesReceived) {
       return <div>Loading...</div>
     } else {
-    return ([
-      <Address
-        statesReceived={this.state.statesReceived}
-        states={this.state.stateData}
-        show={this.state.smShow}
-        cb={this.callback}
-        onHide={this.handleOnHide}
-        address=""
-        city=""
-        state=""
-        zip=""
-      />,
+    return ([this.renderAddress(),
       <Panel header="Representatives for...">
-      {this.state.address}, {this.state.city}, {this.state.state}, {this.state.zip}<Button>Change...</Button>
+      {this.state.address}, {this.state.city}, {this.state.state}, {this.state.zip}<Button onClick={this.onChange}>Change...</Button>
       </Panel>,
       <Grid>
         <Row className="show-grid">

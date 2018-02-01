@@ -1,7 +1,12 @@
 /* eslint-disable no-undef */
 
-function search(cb) {
-  var url = 'http://dev.phowma.com/api/v1/states?type=min';
+function search(type,cb) {
+  var url = 'http://dev.phowma.com/api/v1/states';
+  if (type === "list")
+    url = url + "?type=list";
+  else if (type === "min")
+    url = url + "?type=min"
+  
   return fetch(url, {
     accept: 'application/json',
   }).then(checkStatus)

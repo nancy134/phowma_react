@@ -60,7 +60,7 @@ export default class Home extends Component {
   }
   componentDidMount(){
     var stateOpts = [];
-    States.search((states) => {
+    States.search("list",(states) => {
       stateOpts.push(<MenuItem eventKey={0}>{ALL_STATES}</MenuItem>);
       for(let i=0; i<states.length; i++){
         stateOpts.push(<MenuItem eventKey={states[i].id}>{states[i].name}</MenuItem>);

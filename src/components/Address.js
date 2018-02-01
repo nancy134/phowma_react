@@ -75,21 +75,21 @@ class Address extends React.Component {
           <form>
             <FormGroup>
               <ControlLabel>Address</ControlLabel>
-              <FormControl type="text" placeholder="Enter address"onChange={this.handleAddressChange}/>
+              <FormControl type="text" value={this.state.address} placeholder="Enter address"onChange={this.handleAddressChange}/>
             </FormGroup>
             <FormGroup>
               <ControlLabel>City</ControlLabel>
-              <FormControl type="text" placeholder="Enter city" onChange={this.handleCityChange}/>
+              <FormControl type="text" value={this.state.city} placeholder="Enter city" onChange={this.handleCityChange}/>
             </FormGroup>
             <FormGroup controlId="stateSelect">
               <ControlLabel>State</ControlLabel>
-              <FormControl componentClass="select" placeholder="select" onChange={this.handleStateChange}>
+              <FormControl componentClass="select" value={this.state.state} placeholder="select" onChange={this.handleStateChange}>
                 {stateOpts}
               </FormControl>
             </FormGroup>
             <FormGroup>
               <ControlLabel>Zip Code</ControlLabel>
-              <FormControl type="text" placeholder="Enter zip code" onChange={this.handleZipChange}/>
+              <FormControl type="text" placeholder="Enter zip code" value={this.state.zip} onChange={this.handleZipChange}/>
             </FormGroup>
           </form>
           
