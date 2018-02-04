@@ -6,7 +6,9 @@ import {DropdownButton} from 'react-bootstrap';
 import {Checkbox} from 'react-bootstrap';
 import {MenuItem} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
-import {Button} from 'react-bootstrap';
+import {Jumbotron, Button} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { bootstrapUtils} from 'react-bootstrap/lib/utils';
 import States from '../actions/States';
 import PoliticianList from '../components/PoliticianList';
 import "./Politicians.css";
@@ -24,6 +26,7 @@ const Toggles = {
 
 const ALL_STATES = "All States";
 
+bootstrapUtils.addStyle(Button,'custom');
 export default class Home extends Component {
   constructor(props) {
     super(props)
@@ -143,7 +146,16 @@ export default class Home extends Component {
   }
   renderLinks(){
     return [
-      <Button>Button</Button>
+      <Jumbotron>
+        <style type="text/css">{`
+          .btn-custom {
+            white-space:normal;
+          }
+        `}</style>
+        <LinkContainer to="/gerrymandering">
+          <Button bsStyle="custom" bsSize="large" block>What is gerrymandering?</Button>
+        </LinkContainer>
+      </Jumbotron>
     ];
   }
   render() {

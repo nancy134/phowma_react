@@ -26,7 +26,7 @@ export default class Home extends Component {
               <Col sm={3} >
                 <Jumbotron>
                 <LinkContainer to="/politicians">
-                  <Button bsStyle="custom" bsSize="large" block>What are the politicians saying?</Button>
+                  <Button bsStyle="link" bsSize="large" style="white-space:normal">What are the politicians saying?</Button>
                 </LinkContainer>
                 </Jumbotron>
               </Col>
@@ -49,6 +49,22 @@ export default class Home extends Component {
                 <LinkContainer to="/elections">
                   <Button bsStyle="custom" bsSize="large" block>Who is up for re-election?</Button>
                 </LinkContainer>
+                </Jumbotron>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={3}>
+                <Jumbotron>
+                  <LinkContainer to="/gerrymandering">
+                    <Button bsStyle="custom" bsSize="large" block>What is gerrymandering?</Button>
+                  </LinkContainer>
+                </Jumbotron>
+              </Col>
+              <Col sm={3}>
+                <Jumbotron>
+                  <LinkContainer to="/gerrymandering">
+                    <Button bsStyle="custom" bsSize="large" block>What is Citizens United?</Button>
+                  </LinkContainer>
                 </Jumbotron>
               </Col>
             </Row>

@@ -129,15 +129,29 @@ export default class Representatives extends Component {
     else
     return([]);
   }
+  renderHeader(){
+    if (this.state.city === "") {
+      return([
+        <Panel header="Representatives for...">
+        <Button onClick={this.onChange}>Enter Address...</Button>
+        </Panel>
+      ]);
+    }else{
+      return([
+        <Panel header="Representatives for...">
+        {this.state.address}, {this.state.city}, {this.state.state}, {this.state.zip}&nbsp;<Button onClick={this.onChange}>Change Address...</Button>
+        </Panel>
+      ]);
+    }
+  }
   render() {
     console.log("Representatives:render()");
     if (!this.state.statesReceived) {
       return <div>Loading...</div>
     } else {
-    return ([this.renderAddress(),
-      <Panel header="Representatives for...">
-      {this.state.address}, {this.state.city}, {this.state.state}, {this.state.zip}<Button onClick={this.onChange}>Change...</Button>
-      </Panel>,
+    return ([
+      this.renderAddress(),
+      this.renderHeader(),
       <Grid>
         <Row className="show-grid">
           <Col xs={8} md={6}>{this.renderPoliticians()}</Col>

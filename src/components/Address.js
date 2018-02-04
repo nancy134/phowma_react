@@ -69,7 +69,7 @@ class Address extends React.Component {
       return(
       <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-sm">
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-sm">Home Address</Modal.Title>
+          <Modal.Title id="contained-modal-title-sm">Enter home address:</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
