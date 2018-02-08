@@ -1,5 +1,4 @@
 import React from 'react';
-import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {Button} from 'reactstrap';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
 
@@ -19,7 +18,6 @@ class Address extends React.Component {
     this.handleZipChange = this.handleZipChange.bind(this);
     this.handleStateChange = this.handleStateChange.bind(this);
     this.onSave = this.onSave.bind(this);
-    this.onCancel = this.onCancel.bind(this);
   }
   componentDidMount(){
     console.log("Address:componentDidMount");
@@ -50,55 +48,39 @@ class Address extends React.Component {
   onSave(){
     console.log("onSave() "+this.state.address+" "+this.state.city+" "+this.state.zip);
     this.props.cb(this.state.address, this.state.city, this.state.state, this.state.zip, false);
-    this.props.onHide();
-  }
-  onCancel(){
-    this.props.onHide();
   }
   render(){
     console.log("Address:render()");
-    if (this.state.statesReceived) {
-      return(<div>Loading...</div>);
-    } else {
-      var stateOpts = [];
-      if (this.state.states){
-        for (let i=0; i<this.state.states.length; i++){
-          stateOpts.push(<option value={this.state.states[i].abbreviation}>{this.state.states[i].name}</option>);
-        }
+    var stateOpts = [];
+    if (this.state.states){
+      for (let i=0; i<this.state.states.length; i++){
+        stateOpts.push(<option value={this.state.states[i].abbreviation}>{this.state.states[i].name}</option>);
       }
-      return(
-      <Modal {...this.props} >
-        <ModalHeader>Enter home address:</ModalHeader>
-        <ModalBody>
-          <Form>
-            <FormGroup>
-              <Label>Address</Label>
-              <Input value={this.state.address} placeholder="Enter address"onChange={this.handleAddressChange}/>
-            </FormGroup>
-            <FormGroup>
-              <Label>City</Label>
-              <Input value={this.state.city} placeholder="Enter city" onChange={this.handleCityChange}/>
-            </FormGroup>
-            <FormGroup controlId="stateSelect">
-              <Label>State</Label>
-              <Input type="select" value={this.state.state} placeholder="select" onChange={this.handleStateChange}>
-                {stateOpts}
-              </Input>
-            </FormGroup>
-            <FormGroup>
-              <Label>Zip Code</Label>
-              <Input placeholder="Enter zip code" value={this.state.zip} onChange={this.handleZipChange}/>
-            </FormGroup>
-          </Form>
-          
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={this.onSave}>OK</Button>
-          <Button onClick={this.onCancel}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-      );
     }
+    return(
+      <Form>
+        <h3>Enter address below to find your representative:</h3>
+        <FormGroup>
+          <Label>Address</Label>
+            <Input value={this.state.address} placeholder="Enter address"onChange={this.handleAddressChange}/>
+        </FormGroup>
+        <FormGroup>
+          <Label>City</Label>
+          <Input value={this.state.city} placeholder="Enter city" onChange={this.handleCityChange}/>
+        </FormGroup>
+        <FormGroup controlId="stateSelect">
+          <Label>State</Label>
+          <Input type="select" value={this.state.state} placeholder="select" onChange={this.handleStateChange}>
+           {stateOpts}
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label>Zip Code</Label>
+          <Input placeholder="Enter zip code" value={this.state.zip} onChange={this.handleZipChange}/>
+        </FormGroup>
+        <Button onClick={this.onSave}>Find Representatives</Button>
+      </Form>
+    );
   }
 }
 
