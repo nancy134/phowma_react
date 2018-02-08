@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import InfiniteScroll from './InfiniteScroll';
 import States from '../actions/States';
-import {ListGroup, ListGroupItem} from 'react-bootstrap';
-import {Grid, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col} from 'reactstrap';
 
 class StateList extends Component {
     constructor(props) {
@@ -22,10 +20,9 @@ class StateList extends Component {
     }
     render() {
         console.log("StateList:render()");
-        const loader = <div className="loader">Loading ...</div>;
 
         var items = [];
-        this.state.states.map((state, i) => {
+        this.state.states.forEach((state, i) => {
             items.push(
               
                 <Row className="show-grid">
@@ -40,9 +37,9 @@ class StateList extends Component {
         });
 
         return (
-          <Grid>
+          <Container>
             {items}
-          </Grid>
+          </Container>
         );
     }
 };

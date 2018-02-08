@@ -7,7 +7,6 @@ import Politicians from './containers/Politicians';
 import States from './containers/States';
 import Representatives from './containers/Representatives';
 import Elections from './containers/Elections';
-import Test from './containers/Test';
 
 export default () =>
   <Switch>

@@ -1,37 +1,37 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
-import {Nav, Navbar} from 'react-bootstrap';
-import './App.css';
+import {Nav, Navbar, NavbarBrand, NavbarToggler, Collapse} from 'reactstrap';
 import Routes from './Routes';
 import RouteNavItem from './components/RouteNavItem';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      isOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
   }
   componentDidMount(){
   }
   render() {
     return (
-      <div className="App container">
-        <Navbar fluid collapseOnSelect>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/">Voter-Information</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav pullRight>
-              <RouteNavItem href="/politicians">Politicians</RouteNavItem>
-              <RouteNavItem href="/signup">Signup</RouteNavItem>
-              <RouteNavItem href="/login">Login</RouteNavItem>
-              <RouteNavItem href="/representatives">My Representatives</RouteNavItem>
-              <RouteNavItem href="/states">States</RouteNavItem>
+      <div>
+        <Navbar expand="md" color="dark" className="navbar-dark">
+          <NavbarBrand href="/">Voter-Information</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} className="mr-2"/>
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <RouteNavItem href="/politicians">Social</RouteNavItem>
+              <RouteNavItem href="/representatives">Representatives</RouteNavItem>
               <RouteNavItem href="/elections">Elections</RouteNavItem>
+              <RouteNavItem href="/states">Voting</RouteNavItem>
             </Nav>
-          </Navbar.Collapse>
+          </Collapse>
         </Navbar>
         <Routes></Routes>
       </div>

@@ -9,7 +9,7 @@ function search(props, page, cb) {
   if (props.senateSelected) query = query.concat("q[position_in][]=0&");
   if (props.houseSelected) query = query.concat("q[position_in][]=1&");
   if (props.governorSelected) query = query.concat("q[position_in][]=2&");
-  if (props.stateSelected) query = query.concat("q[state_id_eq]="+props.stateSelected+"&");
+  if (props.stateSelected && props.stateSelected !== '0') query = query.concat("q[state_id_eq]="+props.stateSelected+"&");
   if (props.district_id) query = "district="+props.district_id+"&state_id="+props.state_id;
   console.log("query: "+query);
   var url = 'http://dev.phowma.com/api/v1/politicians?per_page=10&page='+page+"&"+query;

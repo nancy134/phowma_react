@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import {Grid, Row, Col} from 'react-bootstrap';
-import {Button} from 'react-bootstrap';
-import {MenuItem} from 'react-bootstrap';
-import {Panel} from 'react-bootstrap';
+import {Container, Row, Col} from 'reactstrap';
+import {Button} from 'reactstrap';
+import {DropdownItem} from 'reactstrap';
+import {Card, CardTitle} from 'reactstrap';
 import States from '../actions/States';
 import Districts from '../actions/Districts';
 import PoliticianList from '../components/PoliticianList';
@@ -18,7 +18,7 @@ export default class Representatives extends Component {
     this.state = {
       district_id: null,
       state_id: null,
-      smShow: false,
+      isOpen: false,
       address: "",
       city: "",
       state: "",
@@ -41,15 +41,15 @@ export default class Representatives extends Component {
     var stateOpts = [];
     States.search("list",(states) => {
       console.log("States received");
-      stateOpts.push(<MenuItem eventKey={0}>{ALL_STATES}</MenuItem>);
+      stateOpts.push(<DropdownItem eventKey={0}>{ALL_STATES}</DropdownItem>);
       for(let i=0; i<states.length; i++){
-        stateOpts.push(<MenuItem eventKey={states[i].id}>{states[i].name}</MenuItem>);
+        stateOpts.push(<DropdownItem eventKey={states[i].id}>{states[i].name}</DropdownItem>);
       }
       console.log("this.state.districtid: "+this.state.district_id);
       if (this.state.district_id === null){
         this.setState({states: stateOpts,
                        stateData: states,
-                       smShow: true,
+                       isOpen: true,
                        statesReceived: true});
       } else {
         this.setState({states: stateOpts,
@@ -60,13 +60,13 @@ export default class Representatives extends Component {
   }
   onChange(){
     this.setState({
-      smShow: true,
+      isOpen: true,
       renderAddress: true,
     });
   }
   handleOnHide(){
     console.log("handleOnHide");
-    this.setState({smShow:false});
+    this.setState({isOpen:false});
   }
   callback(address, city, state, zip, all){
     console.log("callback address: "+address);
@@ -117,7 +117,7 @@ export default class Representatives extends Component {
     return ([
       <Address
         states={this.state.stateData}
-        show={this.state.smShow}
+        isOpen={this.state.isOpen}
         cb={this.callback}
         onHide={this.handleOnHide}
         address={this.state.address}
@@ -132,15 +132,14 @@ export default class Representatives extends Component {
   renderHeader(){
     if (this.state.city === "") {
       return([
-        <Panel header="Representatives for...">
+        <h1>Enter address to find your representative.</h1>,
         <Button onClick={this.onChange}>Enter Address...</Button>
-        </Panel>
       ]);
     }else{
       return([
-        <Panel header="Representatives for...">
-        {this.state.address}, {this.state.city}, {this.state.state}, {this.state.zip}&nbsp;<Button onClick={this.onChange}>Change Address...</Button>
-        </Panel>
+        <h1>Representatives for ...</h1>,
+        <p>{this.state.address}, {this.state.city}, {this.state.state}, {this.state.zip}</p>,
+        <Button onClick={this.onChange}>Change Address...</Button>
       ]);
     }
   }
@@ -151,12 +150,12 @@ export default class Representatives extends Component {
     } else {
     return ([
       this.renderAddress(),
-      this.renderHeader(),
-      <Grid>
+      <Container>
         <Row className="show-grid">
           <Col xs={8} md={6}>{this.renderPoliticians()}</Col>
+          <Col xs={4} md={6}>{this.renderHeader()}</Col>
         </Row>
-      </Grid>
+      </Container>
     ]);
     }
   }

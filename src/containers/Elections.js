@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-import {Grid, Row, Col} from 'react-bootstrap';
-import {FormGroup} from 'react-bootstrap';
-import {ButtonGroup} from 'react-bootstrap';
-import {DropdownButton} from 'react-bootstrap';
-import {Checkbox} from 'react-bootstrap';
-import {MenuItem} from 'react-bootstrap';
-import {Panel} from 'react-bootstrap';
-import {Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'reactstrap';
+import {FormGroup, Label, Input} from 'reactstrap';
+import {Card, CardTitle} from 'reactstrap';
+import {Button} from 'reactstrap';
 import States from '../actions/States';
 import ElectionList from '../components/ElectionList';
 import "./Politicians.css";
@@ -49,9 +45,9 @@ export default class Home extends Component {
   componentDidMount(){
     var stateOpts = [];
     States.search("list",(states) => {
-      stateOpts.push(<MenuItem eventKey={0}>{ALL_STATES}</MenuItem>);
+      stateOpts.push(<option value={0}>{ALL_STATES}</option>);
       for(let i=0; i<states.length; i++){
-        stateOpts.push(<MenuItem eventKey={states[i].id}>{states[i].name}</MenuItem>);
+        stateOpts.push(<option value={states[i].id}>{states[i].name}</option>);
       }
       console.log("States received");
       this.setState({states: stateOpts,
@@ -78,9 +74,12 @@ export default class Home extends Component {
     this.setState({governorSelected: e.target.checked});
   }
 
-  handleStateChange(ek, e){
-    this.setState({stateSelected: ek,
-                  stateName: this.getName(ek)});
+  handleStateChange(e){
+    console.log("e.target.value: "+e.target.value);
+    console.log("e.target.selectedIndex: "+e.target.selectedIndex);
+    console.log("e.target: "+e.target);
+    this.setState({stateSelected: e.target.selectedIndex});
+                  //stateName: this.getName(ek)});
   }
 
   renderElections() {
@@ -96,17 +95,42 @@ export default class Home extends Component {
   renderFilter(){
     return [
       <FormGroup>
-        <ButtonGroup justified>
-          <DropdownButton title={this.state.stateName} id="state" onSelect={this.handleStateChange} >
-            {this.state.states}
-          </DropdownButton>
-        </ButtonGroup>
+        <Input 
+          type="select" 
+          name="select" 
+          id="state"
+          onChange={this.handleStateChange}>
+          {this.state.states}
+        </Input>
       </FormGroup>,
-      <Panel header="Role">
-        <Checkbox value={Toggles.SENATE} onChange={this.handleSenateChange} checked={this.state.senateSelected}>{Toggles.SENATE}</Checkbox>
-        <Checkbox value={Toggles.HOUSE} onChange={this.handleHouseChange} checked={this.state.houseSelected}>{Toggles.HOUSE}</Checkbox>
-        <Checkbox value={Toggles.GOVERNOR} onChange={this.handleGovernorChange} checked={this.state.governorSelected}>{Toggles.GOVERNOR}</Checkbox>
-      </Panel>,
+      <Card body>
+        <CardTitle>Role</CardTitle>
+        <FormGroup check>
+        <Label check>
+        <Input 
+          type="checkbox"
+          onChange={this.handleSenateChange} 
+          checked={this.state.senateSelected} 
+        />{Toggles.SENATE}
+        </Label>
+        </FormGroup>
+        <FormGroup check>
+        <Label check>
+        <Input
+          type="checkbox"
+          onChange={this.handleHouseChange} 
+         checked={this.state.houseSelected} />{' '}{Toggles.HOUSE}
+        </Label>
+        </FormGroup>
+        <FormGroup check>
+        <Label check>
+        <Input
+          type="checkbox" 
+          onChange={this.handleGovernorChange} 
+          checked={this.state.governorSelected} />{' '}{Toggles.GOVERNOR}
+         </Label>
+         </FormGroup>
+      </Card>,
     ];
   }
   renderLinks(){
@@ -117,13 +141,13 @@ export default class Home extends Component {
   render() {
     console.log("Elections:render()");
     return ([
-      <Grid>
+      <Container>
         <Row className="show-grid">
           <Col md={3}>{this.renderFilter()}</Col>
           <Col md={6}>{this.renderElections()}</Col>
           <Col md={3}>{this.renderLinks()}</Col>
         </Row>
-      </Grid>
+      </Container>
     ]);
   }
 }

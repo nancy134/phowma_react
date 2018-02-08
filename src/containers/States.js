@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {Grid, Row, Col} from 'react-bootstrap';
 import StateList from '../components/StateList';
 import "./States.css";
 

@@ -1,14 +1,10 @@
 import React, { Component } from "react";
-import {Grid, Row, Col} from 'react-bootstrap';
-import {FormGroup} from 'react-bootstrap';
-import {ButtonGroup} from 'react-bootstrap';
-import {DropdownButton} from 'react-bootstrap';
-import {Checkbox} from 'react-bootstrap';
-import {MenuItem} from 'react-bootstrap';
-import {Panel} from 'react-bootstrap';
-import {Jumbotron, Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'reactstrap';
+import {FormGroup} from 'reactstrap';
+import {Label, Input} from 'reactstrap';
+import {Card,CardBody, CardText,CardTitle} from 'reactstrap';
+import {Button} from 'reactstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { bootstrapUtils} from 'react-bootstrap/lib/utils';
 import States from '../actions/States';
 import PoliticianList from '../components/PoliticianList';
 import "./Politicians.css";
@@ -26,7 +22,6 @@ const Toggles = {
 
 const ALL_STATES = "All States";
 
-bootstrapUtils.addStyle(Button,'custom');
 export default class Home extends Component {
   constructor(props) {
     super(props)
@@ -64,9 +59,9 @@ export default class Home extends Component {
   componentDidMount(){
     var stateOpts = [];
     States.search("list",(states) => {
-      stateOpts.push(<MenuItem eventKey={0}>{ALL_STATES}</MenuItem>);
+      stateOpts.push(<option value={0}>{ALL_STATES}</option>);
       for(let i=0; i<states.length; i++){
-        stateOpts.push(<MenuItem eventKey={states[i].id}>{states[i].name}</MenuItem>);
+        stateOpts.push(<option value={states[i].id}>{states[i].name}</option>);
       }
       console.log("States received");
       this.setState({states: stateOpts,
@@ -103,9 +98,8 @@ export default class Home extends Component {
     this.setState({governorSelected: e.target.checked});
   }
 
-  handleStateChange(ek, e){
-    this.setState({stateSelected: ek,
-                  stateName: this.getName(ek)});
+  handleStateChange(e){
+    this.setState({stateSelected: e.target.value});
   }
 
   renderPoliticians() {
@@ -124,38 +118,105 @@ export default class Home extends Component {
   renderFilter(){
     return [
       <FormGroup>
-        <ButtonGroup justified>
-          <DropdownButton title={this.state.stateName} id="state" onSelect={this.handleStateChange} >
-            {this.state.states}
-          </DropdownButton>
-        </ButtonGroup>
+        <Input
+          type="select"
+          name="select"
+          id="state"
+          onChange={this.handleStateChange}>
+          {this.state.states}
+        </Input>
       </FormGroup>,
-      <Panel header="Party">
-      <FormGroup>
-        <Checkbox value={Toggles.DEMOCRAT} onChange={this.handleDemocratChange} checked={this.state.democratSelected}>{Toggles.DEMOCRAT}</Checkbox>
-        <Checkbox value={Toggles.REPUBLICAN} onChange={this.handleRepublicanChange} checked={this.state.republicanSelected}>{Toggles.REPUBLICAN}</Checkbox>
-        <Checkbox value={Toggles.INDEPENDENT} onChange={this.handleIndependentChange} checked={this.state.independentSelected}>{Toggles.INDEPENDENT}</Checkbox>
+      <Card body>
+      <CardTitle>Party</CardTitle>
+      <FormGroup check>
+        <Label check>
+         <Input 
+           type="checkbox" 
+           onChange={this.handleDemocratChange}
+           value={Toggles.DEMOCRAT}
+           checked={this.state.democratSelected}
+         />{' '}
+           {Toggles.DEMOCRAT}
+        </Label>
       </FormGroup>
-      </Panel>,
-      <Panel header="Role">
-        <Checkbox value={Toggles.SENATE} onChange={this.handleSenateChange} checked={this.state.senateSelected}>{Toggles.SENATE}</Checkbox>
-        <Checkbox value={Toggles.HOUSE} onChange={this.handleHouseChange} checked={this.state.houseSelected}>{Toggles.HOUSE}</Checkbox>
-        <Checkbox value={Toggles.GOVERNOR} onChange={this.handleGovernorChange} checked={this.state.governorSelected}>{Toggles.GOVERNOR}</Checkbox>
-      </Panel>,
+      <FormGroup check> 
+        <Label check>
+        <Input
+          type="checkbox"
+          onChange={this.handleRepublicanChange}
+          value={Toggles.REPUBLICAN}
+          checked={this.state.republicanSelected}
+        />{' '}
+          {Toggles.REPUBLICAN}
+        </Label>     
+      </FormGroup>
+      <FormGroup check>
+        <Label check>
+        <Input
+          type="checkbox"
+          onChange={this.handleIndependentChange}
+          value={Toggles.INDEPENDENT}
+          checked={this.state.independentSelected}
+        />{' '}{Toggles.INDEPENDENT}
+        </Label>
+        
+      </FormGroup>
+      </Card>,
+      <Card body>
+        <CardTitle>Role</CardTitle>
+        <FormGroup check>
+        <Label check>
+        <Input
+          type="checkbox"
+          onChange={this.handleSenateChange}
+          value={Toggles.SENATE}
+          checked={this.state.senateSelected}
+        />{' '}{Toggles.SENATE}
+        </Label>
+        </FormGroup>
+        <FormGroup check>
+        <Label check>
+        <Input
+          type="checkbox"
+          onChange={this.handleHouseChange}
+          value={Toggles.HOUSE}
+          checked={this.state.houseSelected}
+        />{' '}{Toggles.HOUSE}
+        </Label>
+        </FormGroup>
+        <FormGroup check>
+        <Label check>
+        <Input
+          type="checkbox"
+          onChange={this.handleGovernorChange}
+          value={Toggles.GOVERNOR}
+          checked={this.state.governorSelected}
+        />{' '}{Toggles.GOVERNOR}
+        </Label>
+        </FormGroup>
+      </Card>,
     ];
   }
   renderLinks(){
     return [
-      <Jumbotron>
-        <style type="text/css">{`
-          .btn-custom {
-            white-space:normal;
-          }
-        `}</style>
-        <LinkContainer to="/gerrymandering">
-          <Button bsStyle="custom" bsSize="large" block>What is gerrymandering?</Button>
-        </LinkContainer>
-      </Jumbotron>
+      <Card>
+        <CardBody>
+          <CardTitle>Representative</CardTitle>
+          <CardText>Who is my representative? What is my congressional district?</CardText>
+          <LinkContainer to="/representatives">
+            <Button color="primary">My Representative</Button>
+          </LinkContainer>
+        </CardBody>
+      </Card>,
+      <Card>
+        <CardBody>
+          <CardTitle>Voter Registration</CardTitle>
+          <CardText>Check to see if you are registered to vote</CardText>
+          <LinkContainer to="/states">
+            <Button color="primary">Voter Registration</Button>
+          </LinkContainer>
+        </CardBody>
+      </Card>   
     ];
   }
   render() {
@@ -164,13 +225,13 @@ export default class Home extends Component {
       return <div>Loading...</div>
     } else {
     return ([
-      <Grid>
+      <Container className="mt-3">
         <Row className="show-grid">
           <Col md={3}>{this.renderFilter()}</Col>
           <Col md={6}>{this.renderPoliticians()}</Col>
           <Col md={3}>{this.renderLinks()}</Col>
         </Row>
-      </Grid>
+      </Container>
     ]);
     }
   }

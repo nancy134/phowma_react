@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import InfiniteScroll from './InfiniteScroll';
 import Elections from '../actions/Elections';
-import {ListGroup, ListGroupItem} from 'react-bootstrap';
-import {Row, Col} from 'react-bootstrap';
-import {Image} from 'react-bootstrap';
+import {ListGroup, ListGroupItem} from 'reactstrap';
+import {Row, Col} from 'reactstrap';
 
 class ElectionList extends Component {
     constructor(props) {
@@ -15,7 +14,6 @@ class ElectionList extends Component {
             pageStart: 0,
             query: "",
             isRestart: false,
-            index: 0,
         };
     }
 
@@ -51,13 +49,12 @@ class ElectionList extends Component {
         const loader = <div className="loader">Loading ...</div>;
         var items = [];
         var name = "";
-        this.state.elections.map((election, i) => {
-          this.state.index = i;
-          if (this.state.elections[i].position == "senate")
+        this.state.elections.forEach((election, i) => {
+          if (this.state.elections[i].position === "senate")
             name = "Senate ";
-          else if (this.state.elections[i].position == "house")
+          else if (this.state.elections[i].position === "house")
             name = "House ";
-          else if (this.state.elections[i].position == "governor")
+          else if (this.state.elections[i].position === "governor")
             name = "Governor ";
 
           var stateName = "";

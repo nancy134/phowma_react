@@ -1,7 +1,7 @@
 import React from 'react';
-import {Modal} from 'react-bootstrap';
-import {Button} from 'react-bootstrap';
-import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {Button} from 'reactstrap';
+import {Form, FormGroup, Input, Label} from 'reactstrap';
 
 class Address extends React.Component {
   constructor(props){
@@ -67,37 +67,35 @@ class Address extends React.Component {
         }
       }
       return(
-      <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-sm">
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-sm">Enter home address:</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
+      <Modal {...this.props} >
+        <ModalHeader>Enter home address:</ModalHeader>
+        <ModalBody>
+          <Form>
             <FormGroup>
-              <ControlLabel>Address</ControlLabel>
-              <FormControl type="text" value={this.state.address} placeholder="Enter address"onChange={this.handleAddressChange}/>
+              <Label>Address</Label>
+              <Input value={this.state.address} placeholder="Enter address"onChange={this.handleAddressChange}/>
             </FormGroup>
             <FormGroup>
-              <ControlLabel>City</ControlLabel>
-              <FormControl type="text" value={this.state.city} placeholder="Enter city" onChange={this.handleCityChange}/>
+              <Label>City</Label>
+              <Input value={this.state.city} placeholder="Enter city" onChange={this.handleCityChange}/>
             </FormGroup>
             <FormGroup controlId="stateSelect">
-              <ControlLabel>State</ControlLabel>
-              <FormControl componentClass="select" value={this.state.state} placeholder="select" onChange={this.handleStateChange}>
+              <Label>State</Label>
+              <Input type="select" value={this.state.state} placeholder="select" onChange={this.handleStateChange}>
                 {stateOpts}
-              </FormControl>
+              </Input>
             </FormGroup>
             <FormGroup>
-              <ControlLabel>Zip Code</ControlLabel>
-              <FormControl type="text" placeholder="Enter zip code" value={this.state.zip} onChange={this.handleZipChange}/>
+              <Label>Zip Code</Label>
+              <Input placeholder="Enter zip code" value={this.state.zip} onChange={this.handleZipChange}/>
             </FormGroup>
-          </form>
+          </Form>
           
-        </Modal.Body>
-        <Modal.Footer>
+        </ModalBody>
+        <ModalFooter>
           <Button onClick={this.onSave}>OK</Button>
           <Button onClick={this.onCancel}>Cancel</Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Modal>
       );
     }

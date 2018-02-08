@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import InfiniteScroll from './InfiniteScroll';
 import Politicians from '../actions/Politicians';
-import {ListGroup, ListGroupItem} from 'react-bootstrap';
-import {Row, Col} from 'react-bootstrap';
-import {Image} from 'react-bootstrap';
+import {ListGroup, ListGroupItem} from 'reactstrap';
+import {Row, Col} from 'reactstrap';
+import {Media} from 'reactstrap';
 import LatestPost from '../components/LatestPost';
 
 class PoliticianList extends Component {
@@ -16,7 +16,6 @@ class PoliticianList extends Component {
             pageStart: 0,
             query: "",
             isRestart: false,
-            index: 0,
         };
     }
 
@@ -54,20 +53,19 @@ class PoliticianList extends Component {
         var name = "";
         var social_id = "";
         var social_type = "";
-        this.state.politicians.map((politician, i) => {
-          this.state.index = i;
+        this.state.politicians.forEach((politician, i) => {
           name = "";
-          if (this.state.politicians[i].position == "senator")
+          if (this.state.politicians[i].position === "senator")
             name = "Senator ";
-          else if (this.state.politicians[i].position == "representative")
+          else if (this.state.politicians[i].position === "representative")
             name = "Representative ";
-          else if (this.state.politicians[i].position == "governor")
+          else if (this.state.politicians[i].position === "governor")
             name = "Governor ";
 
           name = name + this.state.politicians[i].first_name + " " + this.state.politicians[i].last_name;
-          if (this.state.politicians[i].party == "democrat")
+          if (this.state.politicians[i].party === "democrat")
             name = name + " (D)";
-          else if (this.state.politicians[i].party == "republican")
+          else if (this.state.politicians[i].party === "republican")
             name = name + " (R)";
 
 	  social_id = "";
@@ -81,7 +79,7 @@ class PoliticianList extends Component {
               <ListGroupItem>
               <Row>
               <Col xs={3}>
-                <Image src={this.state.politicians[i].avatar_thumb}></Image>
+                <Media object src={this.state.politicians[i].avatar_thumb}/>
               </Col>
               <Col xs={7}>
                 <p>{name}</p>
