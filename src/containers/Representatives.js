@@ -98,10 +98,10 @@ export default class Representatives extends Component {
       return <div>Loading...</div>
     } else {
     return ([
-      <Container>
+      <Container className="mt-3">
         <Row className="show-grid">
-          <Col xs={8} md={6}>{this.renderPoliticians()}</Col>
-          <Col xs={4} md={6}>{this.renderAddress()}</Col>
+          <Col xs={8} md={8}>{this.renderPoliticians()}</Col>
+          <Col xs={4} md={4}>{this.renderAddress()}</Col>
         </Row>
       </Container>
     ]);

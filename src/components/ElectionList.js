@@ -64,13 +64,13 @@ class ElectionList extends Component {
 	  items.push(
             <ListGroupItem>
               <Row>
-                <Col xs={2}>
+                <Col xs={4}>
                   <p>{name}</p>
                 </Col>
-                <Col xs={2}>
+                <Col xs={4}>
                   <p>{stateName}</p>
                 </Col>
-                <Col xs={2}>
+                <Col xs={4}>
                   <p>{this.state.elections[i].date}</p>
                 </Col>
               </Row>

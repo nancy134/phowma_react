@@ -18,8 +18,6 @@ class LatestPost extends Component {
     }
     render() {
         console.log("LatestPost:render:state.id: "+this.state.id);
-        return (<p>Placeholder</p>);
-        /*
         if (this.state.id === ""){
             return (<p>No items</p>);
         }else{ 
@@ -35,9 +33,9 @@ class LatestPost extends Component {
                     <EmbeddedPost href={url} />
                 </FacebookProvider>
             );
-        }
+          }
 
-        }*/
+        }
     }
 };
 

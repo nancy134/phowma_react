@@ -10,7 +10,7 @@ export default class Home extends Component {
     console.log("Handle registered");
   }
   render() {
-    return (
+    return ([
       <Container className="mt-3">
       <Row>
       <Col sm="12" md={{size:10, offset:1}}>
@@ -51,10 +51,28 @@ export default class Home extends Component {
             </LinkContainer>
           </CardBody>
         </Card>
+        <Card>
+          <CardBody>
+            <CardTitle>Political Party</CardTitle>
+            <CardText>Take this quiz from the Pew Research Center to find out where you fit on the political spectrum</CardText>
+            <LinkContainer to="/politicalquiz">
+              <Button color="primary">Political Quiz</Button>
+            </LinkContainer>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            <CardTitle>Gerrymandering</CardTitle>
+            <CardText>What is gerrymandering and why is it important to voters?</CardText>
+            <LinkContainer to="/gerrymandering">
+              <Button color="primary">Gerrymandering</Button>
+            </LinkContainer>
+          </CardBody>
+        </Card> 
       </CardColumns>
       </Col>
       </Row>
-      </Container>
-    );
+      </Container>,
+    ]);
   }
 }

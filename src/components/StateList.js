@@ -25,8 +25,8 @@ class StateList extends Component {
         this.state.states.forEach((state, i) => {
             items.push(
               
-                <Row className="show-grid">
-                  <Col xs={6} md={6}>
+                <Row className="border">
+                  <Col xs={3} md={3}>
                     {this.state.states[i].name}
                   </Col>
                   <Col xs= {6} md={6}>
@@ -37,7 +37,7 @@ class StateList extends Component {
         });
 
         return (
-          <Container>
+          <Container className="border">
             {items}
           </Container>
         );

@@ -30,6 +30,7 @@ export default class Home extends Component {
       state_id: null,
       stateData: [],
       stateOpts: [],
+      statesReceived: false,
     }
 
     this.handleSenateChange = this.handleSenateChange.bind(this);
@@ -50,8 +51,11 @@ export default class Home extends Component {
         stateOpts.push(<option value={states[i].id}>{states[i].name}</option>);
       }
       console.log("States received");
-      this.setState({states: stateOpts,
-                     stateData: states});
+      this.setState({
+        states: stateOpts,
+        stateData: states,
+        statesReceived: true,
+      });
      });
   }
   getName(id){
@@ -140,14 +144,18 @@ export default class Home extends Component {
   }
   render() {
     console.log("Elections:render()");
-    return ([
-      <Container>
-        <Row className="show-grid">
-          <Col md={3}>{this.renderFilter()}</Col>
-          <Col md={6}>{this.renderElections()}</Col>
-          <Col md={3}>{this.renderLinks()}</Col>
-        </Row>
-      </Container>
-    ]);
+    if (!this.state.statesReceived){
+      return <div>Loading...</div>
+    } else {
+      return ([
+        <Container className="mt-3">
+          <Row className="show-grid">
+            <Col md={3}>{this.renderFilter()}</Col>
+            <Col md={6}>{this.renderElections()}</Col>
+            <Col md={3}>{this.renderLinks()}</Col>
+          </Row>
+        </Container>
+      ]);
+    }
   }
 }

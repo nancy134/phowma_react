@@ -4,8 +4,9 @@ import Politicians from '../actions/Politicians';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import {Row, Col} from 'reactstrap';
 import {Media} from 'reactstrap';
+import {Button} from 'reactstrap';
 import LatestPost from '../components/LatestPost';
-
+import FA from 'react-fontawesome';
 class PoliticianList extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +18,8 @@ class PoliticianList extends Component {
             query: "",
             isRestart: false,
         };
+        this.onTwitter = this.onTwitter.bind(this);
+        this.onFacebook = this.onFacebook.bind(this);
     }
 
     loadItems(page) {
@@ -45,7 +48,12 @@ class PoliticianList extends Component {
                      state_id: newProps.state_id,
                      district_id: newProps.district_id});
     }
-
+    onTwitter(param,e){
+      window.open(param);
+    }
+    onFacebook(param,e){
+      window.open(param);
+    }
     render() {
         console.log("PoliticianList:render()");
         const loader = <div className="loader">Loading ...</div>;
@@ -73,17 +81,33 @@ class PoliticianList extends Component {
           if (this.state.politicians[i].posts && this.state.politicians[i].posts.length > 0) {
              social_id = this.state.politicians[i].posts[0].social_id;
              social_type = this.state.politicians[i].posts[0].social_type;
-           } 
-            
+           }
+           var district = ""; 
+           if (this.state.politicians[i].district){
+             if (this.state.politicians[i].district.number === 0)
+               district = this.state.politicians[i].district.name
+             else 
+               district = this.state.politicians[i].district.name+" Congressional District" 
+           }
+           var twitter = "";
+           var facebook = "";
+           if (this.state.politicians[i].twitter && this.state.politicians[i].twitter !== "")
+             twitter = <Button color="link" onClick={(e) => this.onTwitter("http://www.twitter.com/"+this.state.politicians[i].twitter,e)}> <FA size="2x" name="twitter" /></Button>
+           if (this.state.politicians[i].facebook && this.state.politicians[i].facebook !== "")
+             facebook = <Button color="link" onClick={(e) => this.onFacebook("http://www.facebook.com/"+this.state.politicians[i].facebook,e)}><FA size="2x" name="facebook" /></Button>
 	    items.push(
               <ListGroupItem>
               <Row>
               <Col xs={3}>
                 <Media object src={this.state.politicians[i].avatar_thumb}/>
               </Col>
-              <Col xs={7}>
-                <p>{name}</p>
-                <p>{this.state.politicians[i].state.name}</p>
+              <Col xs={9}>
+                <p className="font-weight-bold my-0">{name}</p>
+                <p className="font-weight-light my-0">{this.state.politicians[i].state.name} {district}</p>
+                <div className="float-right">
+                {twitter}
+                {facebook}
+                </div>
               </Col>
               </Row>
               <Row>
