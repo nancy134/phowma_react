@@ -63,11 +63,11 @@ class PoliticianList extends Component {
         var social_type = "";
         this.state.politicians.forEach((politician, i) => {
           name = "";
-          if (this.state.politicians[i].position === "senator")
+          if (this.state.politicians[i].office.position === "senator")
             name = "Senator ";
-          else if (this.state.politicians[i].position === "representative")
+          else if (this.state.politicians[i].office.position === "representative")
             name = "Representative ";
-          else if (this.state.politicians[i].position === "governor")
+          else if (this.state.politicians[i].office.position === "governor")
             name = "Governor ";
 
           name = name + this.state.politicians[i].first_name + " " + this.state.politicians[i].last_name;
@@ -83,11 +83,11 @@ class PoliticianList extends Component {
              social_type = this.state.politicians[i].posts[0].social_type;
            }
            var district = ""; 
-           if (this.state.politicians[i].district){
-             if (this.state.politicians[i].district.number === 0)
-               district = this.state.politicians[i].district.name
+           if (this.state.politicians[i].office.district){
+             if (this.state.politicians[i].office.district.number === 0)
+               district = this.state.politicians[i].office.district.name
              else 
-               district = this.state.politicians[i].district.name+" Congressional District" 
+               district = this.state.politicians[i].office.district.name+" Congressional District" 
            }
            var twitter = "";
            var facebook = "";
@@ -103,7 +103,7 @@ class PoliticianList extends Component {
               </Col>
               <Col xs={9}>
                 <p className="font-weight-bold my-0">{name}</p>
-                <p className="font-weight-light my-0">{this.state.politicians[i].state.name} {district}</p>
+                <p className="font-weight-light my-0">{this.state.politicians[i].office.state.name} {district}</p>
                 <div className="float-right">
                 {twitter}
                 {facebook}
