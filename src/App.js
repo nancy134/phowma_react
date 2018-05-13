@@ -21,13 +21,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar expand="md" color="dark" className="navbar-dark">
+        <Navbar expand="md" className="navbar-light bg-light">
           <NavbarBrand href="/">Voter-Information</NavbarBrand>
           <NavbarToggler onClick={this.toggle} className="mr-2"/>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <RouteNavItem href="/politicians">Social</RouteNavItem>
-              <RouteNavItem href="/representatives">Representatives</RouteNavItem>
+              <RouteNavItem href="/">Home</RouteNavItem>
+              <RouteNavItem href="/politicians">Senators</RouteNavItem>
+              <RouteNavItem href="/findmyrep">Representative</RouteNavItem>
               <RouteNavItem href="/elections">Elections</RouteNavItem>
               <RouteNavItem href="/states">Voting</RouteNavItem>
             </Nav>

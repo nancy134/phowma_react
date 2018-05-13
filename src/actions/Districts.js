@@ -9,6 +9,24 @@ function search(address,city,state,zip,cb) {
     .then(cb);
 }
 
+function searchFull(address,cb) {
+  var url = 'http://dev.phowma.com/api/v1/districts/find?faddress='+address;
+  return fetch(url, {
+    accept: 'application/json',
+  }).then(checkStatus)
+    .then(parseJSON)
+    .then(cb);
+}
+
+function show(id, cb){
+  var url = 'http://dev.phowma.com/api/v1/districts/'+id;
+  return fetch(url, {
+    accept: 'application/json',
+  }).then(checkStatus)
+    .then(parseJSON)
+    .then(cb);
+}
+
 function checkStatus(response){
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -24,6 +42,6 @@ function parseJSON(response){
   return response.json();
 }
 
-const Districts = {search};
+const Districts = {search, searchFull, show};
 export default Districts;
 

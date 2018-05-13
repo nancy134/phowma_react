@@ -77,8 +77,6 @@ class ElectionList extends Component {
           if (this.state.elections[i].office.district)
             districtName = this.state.elections[i].office.district.name + " Congressional District";
 
-          var name = position + stateName + districtName;
-
           var wikipedia = <Button color="link" onClick={(e) => this.onWikipedia("http://www.wikipedia.com/",e)}> <FA size="2x" name="wikipedia-w" /></Button>
 
           var dateOptions = {
@@ -90,7 +88,7 @@ class ElectionList extends Component {
           var date = new Date(this.state.elections[i].date);
 
           var politician = "";
-          if (this.state.elections[i].office.politician && this.state.elections[i].office.politician.party != "vacant"){
+          if (this.state.elections[i].office.politician && this.state.elections[i].office.politician.party !== "vacant"){
             politician = <Media object src={this.state.elections[i].office.politician.avatar_thumb}/>
           }
 
