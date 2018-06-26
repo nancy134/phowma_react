@@ -20,7 +20,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div class="phowma">
         <Navbar expand="md" className="navbar-light bg-light">
           <NavbarBrand href="/">Voter-Information</NavbarBrand>
           <NavbarToggler onClick={this.toggle} className="mr-2"/>

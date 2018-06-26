@@ -170,6 +170,7 @@ export default class District extends Component {
             <Button color="link" className="pl-0">Senate</Button>
             <Button color="link" className="pl-0">House</Button>
             <Button color="link" className="pl-0">Governor</Button>
+            <h4>Actions</h4>
             <div>
               <Button color="primary">Check your voter registration</Button>
             </div>

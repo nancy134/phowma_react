@@ -5,27 +5,60 @@ const app = express();
 const port = process.env.PORT || 5000;
 const path = require('path');
 const fs = require('fs');
+const httprequest = require('request');
+
 console.log("got here");
-app.get('/', function(request, response){
-  console.log('Home page visited! '+request.hostname+request.baseUrl+JSON.stringify(request.query));
-  const filePath = path.resolve(__dirname, './build', 'index.html');
+app.get('app.get(/)', function(request, response){
+  console.log("app.get(/)");
+  url = 'https://ipinfo.io/'+request.headers['x-real-ip'] + '/geo';
+  httprequest(url, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log("body.region: "+body.region);
 
-  fs.readFile(filePath, 'utf8', function(err, data) {
-    if (err) {
-      return console.log(err);
-    }
-    data = data.replace(/\$PAGE_TITLE/g, 'Home');
-    data = data.replace(/\$PAGE_DESCRIPTION/g, 'Information for voters');
-    data = data.replace(/\$TWITTER_HANDLE/g, '@voterinfo777');
-    data = data.replace(/\$TWITTER_IMAGE/g, 'http://server.phowma.com/Representative800x800.jpg');
-    data = data.replace(/\$PAGE_URL/g, 'http://server.phowma.com/');
-    result = data.replace(/\$SITE_NAME/g, 'Voter Information');
+    const filePath = path.resolve(__dirname, './build', 'index.html');
 
-    response.send(result);
+    fs.readFile(filePath, 'utf8', function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+      data = data.replace(/\$PAGE_TITLE/g, 'Home');
+      data = data.replace(/\$PAGE_DESCRIPTION/g, 'Information for voters');
+      data = data.replace(/\$TWITTER_HANDLE/g, '@voterinfo777');
+      data = data.replace(/\$TWITTER_IMAGE/g, 'http://server.phowma.com/images/wevebackground975.jpg');
+      data = data.replace(/\$PAGE_URL/g, 'http://server.phowma.com/');
+      result = data.replace(/\$SITE_NAME/g, 'Voter Information');
+
+      response.send(result);
+    });
   });
 });
+
+app.get('/registration/*', function(request, response){
+  console.log('app.get(/registration/*)');
+  url = 'https://ipinfo.io/'+request.headers['x-real-ip'] + '/geo';
+  httprequest(url, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log("body.region: "+body.region);
+    const filePath = path.resolve(__dirname, './build', 'index.html');
+
+    fs.readFile(filePath, 'utf8', function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+      data = data.replace(/\$PAGE_TITLE/g, 'Check your voter registration');
+      data = data.replace(/\$PAGE_DESCRIPTION/g, 'Check your voter registration');
+      data = data.replace(/\$TWITTER_HANDLE/g, '@voterinfo777');
+      data = data.replace(/\$TWITTER_IMAGE/g, 'http://server.phowma.com/wavebackground600.jpg');
+      data = data.replace(/\$PAGE_URL/g, 'http://server.phowma.com/registration');
+      result = data.replace(/\$SITE_NAME/g, 'Voter Information');
+
+      response.send(result);
+    });
+  });
+});
+
 app.get('/findmyrep', function(request, response){
-  console.log('findmyrep visited!');
+  console.log('app.get(/findmyrep)');
   const filePath = path.resolve(__dirname, './build', 'index.html');
 
   fs.readFile(filePath, 'utf8', function(err, data) {
@@ -63,11 +96,24 @@ app.get('/district/*', function(request, response){
 });
 
 app.use(express.static(path.resolve(__dirname, 'build')));
-
-app.get('*', function(request, response) {
-  console.log("app.get(*) "+request.hostname+request.baseUrl+JSON.stringify(request.query));
-  const filePath = path.resolve(__dirname, 'build', 'index.html');
+app.get('/robots.txt', function(request, response) {
+  console.log('app.get(/robots.txt)');
+  const filePath = path.resolve(__dirname, 'build', 'robots.txt');
   response.sendFile(filePath);
 });
+
+
+app.get('*', function(request, response) {
+  console.log("app.get(*) ");
+  url = 'https://ipinfo.io/'+request.headers['x-real-ip'] + '/geo';
+  httprequest(url, { json: true }, (err, res, body) => {
+    if (err) { return console.log(err); }
+    console.log("body.region: "+body.region);
+
+  const filePath = path.resolve(__dirname, 'build', 'index.html');
+  response.sendFile(filePath);
+  });
+});
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

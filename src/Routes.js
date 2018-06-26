@@ -12,6 +12,8 @@ import Gerrymandering from './containers/Gerrymandering';
 import FindMyRep from './containers/FindMyRep';
 import Representative from './containers/Representative';
 import District from './containers/District';
+import Race from './containers/Race';
+import Registration from './containers/Registration';
 
 export default () =>
   <Switch>
@@ -26,5 +28,7 @@ export default () =>
     <Route path="/politicalquiz" exact component={PoliticalQuiz} />
     <Route path="/gerrymandering" exact component={Gerrymandering} />
     <Route path="/findmyrep" exact component={FindMyRep} />
+    <Route path="/race/:id/:position" exact component={Race} />
+    <Route path="/registration/:id" exact component={Registration} />
     <Route component={NotFound} />
   </Switch>;

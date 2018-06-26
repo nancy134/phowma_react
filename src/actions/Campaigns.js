@@ -1,12 +1,7 @@
 /* eslint-disable no-undef */
 
-function search(type,cb) {
-  var url = 'https://dev.phowma.com/api/v1/states';
-  if (type === "list")
-    url = url + "?type=list";
-  else if (type === "min")
-    url = url + "?type=min"
-  
+function index(q, cb) {
+  var url = 'https://dev.phowma.com/api/v1/campaigns?' + q
   return fetch(url, {
     accept: 'application/json',
   }).then(checkStatus)
@@ -22,7 +17,6 @@ function checkStatus(response){
   const error = new Error(`HTTP Error ${response.statusText}`);
   error.status = response.statusText;
   error.response = response;
-  console.log(error)
   throw error;
 }
 
@@ -30,6 +24,5 @@ function parseJSON(response){
   return response.json();
 }
 
-const States = {search};
-export default States;
-
+const Campaigns = {index};
+export default Campaigns;
